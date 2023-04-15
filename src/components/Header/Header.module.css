@@ -1,0 +1,33 @@
+.nav {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  list-style: none;
+}
+
+.navItem {
+  padding: 10px;
+}
+
+.navLink {
+  font-weight: 500;
+  text-decoration: none;
+  color: black;
+}
+
+.navLink:hover {
+  color: red;
+  text-decoration: underline;
+}
+
+.navLink:active {
+  color: red;
+}
+
+.active {
+  color: red;
+}
