@@ -23,11 +23,3 @@
   color: red;
   text-decoration: underline;
 }
-
-.navLink:active {
-  color: red;
-}
-
-.active {
-  color: red;
-}
