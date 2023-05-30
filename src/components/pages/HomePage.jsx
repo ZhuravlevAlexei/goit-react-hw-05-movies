@@ -1,6 +1,6 @@
-import MovieList from 'components/MovieList/MovieList';
 import { useEffect, useState } from 'react';
 import { getDataByAxios } from 'sevices/library';
+import MovieList from 'components/MovieList/MovieList';
 
 const HomePage = () => {
   const [paginationPage, setPaginationPage] = useState(1);

@@ -15,7 +15,7 @@ export async function getDataByAxios(
       URL = URL + `&query=${searchText.trim()}`;
     }
     URL = URL + `&page=${paginationPage}`;
-    console.log('URL ', URL);
+    // console.log('URL ', URL);
     const resp = await axios.get(URL);
     return resp;
   } catch (error) {

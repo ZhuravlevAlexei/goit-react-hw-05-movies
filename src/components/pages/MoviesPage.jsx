@@ -15,7 +15,7 @@ const MoviesPage = () => {
       if (resp.status !== 200) {
         throw new Error(resp.statusText);
       } else {
-        console.log('resp ', resp);
+        // console.log('resp ', resp);
         setTotalPages(resp.data.total_pages);
         setMovieList(resp.data.results);
       }
@@ -23,7 +23,7 @@ const MoviesPage = () => {
   }, [paginationPage, searchText]);
 
   const createSearchText = searchText => {
-    console.log('search text >>', searchText.trim());
+    // console.log('search text >>', searchText.trim());
     setSearchText(searchText.trim());
     setPaginationPage(1);
   };
@@ -41,6 +41,7 @@ const MoviesPage = () => {
   };
 
   const title = `Search "${searchText}" (Page ${paginationPage} of ${totalPages})`;
+
   return (
     <div>
       <Search on onSubmit={createSearchText} />
