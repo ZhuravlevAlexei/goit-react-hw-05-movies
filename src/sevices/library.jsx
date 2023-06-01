@@ -14,12 +14,15 @@ export async function getDataByAxios(
     if (searchText.trim()) {
       URL = URL + `&query=${searchText.trim()}`;
     }
-    URL = URL + `&page=${paginationPage}`;
+    if (paginationPage) {
+      URL = URL + `&page=${paginationPage}`;
+    }
     // console.log('URL ', URL);
     const resp = await axios.get(URL);
+    //toast.success('Success!');
     return resp;
   } catch (error) {
-    console.log('error ', error.message);
+    // console.log('error ', error.message);
     toast.error(error.message);
   }
 }

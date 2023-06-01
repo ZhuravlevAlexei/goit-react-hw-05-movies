@@ -1,17 +1,14 @@
 import { useEffect, useState } from 'react';
 import { getDataByAxios } from 'sevices/library';
-
-import Search from 'components/Search/Search';
 import MovieList from 'components/MovieList/MovieList';
 
-const MoviesPage = () => {
+const Home = () => {
   const [paginationPage, setPaginationPage] = useState(1);
-  const [searchText, setSearchText] = useState('');
   const [totalPages, setTotalPages] = useState(0);
   const [movieList, setMovieList] = useState([]);
 
   useEffect(() => {
-    getDataByAxios(`/search/movie`, paginationPage, searchText).then(resp => {
+    getDataByAxios(`/trending/movie/week`, paginationPage).then(resp => {
       if (resp.status !== 200) {
         throw new Error(resp.statusText);
       } else {
@@ -20,13 +17,7 @@ const MoviesPage = () => {
         setMovieList(resp.data.results);
       }
     });
-  }, [paginationPage, searchText]);
-
-  const createSearchText = searchText => {
-    // console.log('search text >>', searchText.trim());
-    setSearchText(searchText.trim());
-    setPaginationPage(1);
-  };
+  }, [paginationPage]);
 
   const onLoadNextPage = () => {
     setPaginationPage(paginationPage + 1);
@@ -40,12 +31,11 @@ const MoviesPage = () => {
     setPaginationPage(1);
   };
 
-  const title = `Search "${searchText}" (Page ${paginationPage} of ${totalPages})`;
+  const title = `Trending today (Page ${paginationPage} of ${totalPages})`;
 
   return (
     <div>
-      <Search on onSubmit={createSearchText} />
-      {searchText && <h3>{title}</h3>}
+      <h3>{title}</h3>
       {movieList.length !== 0 && (
         <MovieList
           movieList={movieList}
@@ -60,4 +50,4 @@ const MoviesPage = () => {
   );
 };
 
-export default MoviesPage;
+export default Home;

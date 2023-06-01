@@ -1,19 +1,20 @@
 import { Route, Routes } from 'react-router-dom';
 import Layout from './Layout/Layout';
-import HomePage from './pages/HomePage';
-import MoviesPage from './pages/MoviesPage';
-import MovieDataPage from './pages/MovieDataPage';
+import Home from '../pages/Home';
+import Movies from '../pages/Movies';
+import MovieDetails from '../pages/MovieDetails';
 
 const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<HomePage />} />
-        <Route path="movies" element={<MoviesPage />} />
-        <Route path="movies/:movieId" element={<MovieDataPage />} />
-        {/* <Route path="cats" element={<Cast />} />
+        <Route index element={<Home />} />
+        <Route path="movies" element={<Movies />} />
+        <Route path="movies/:movieId" element={<MovieDetails />}>
+          {/* <Route path="cast" element={<Cast />} />
           <Route path="review" element={<Review />} /> */}
-        {/* </Route> */}
+        </Route>
+        <Route path="*" element={<Home />} />
       </Route>
     </Routes>
   );
