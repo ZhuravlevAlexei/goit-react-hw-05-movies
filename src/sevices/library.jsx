@@ -17,7 +17,8 @@ export async function getDataByAxios(
     if (paginationPage) {
       URL = URL + `&page=${paginationPage}`;
     }
-    // console.log('URL ', URL);
+    // console.log('FULL URL: ', URL);
+    //alert(URL);
     const resp = await axios.get(URL);
     //toast.success('Success!');
     return resp;

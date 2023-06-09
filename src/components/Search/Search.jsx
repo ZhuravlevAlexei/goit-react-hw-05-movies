@@ -2,24 +2,24 @@ import { useState } from 'react';
 // import PropTypes from 'prop-types';
 import css from './Search.module.css';
 
-const Search = ({ onSubmit }) => {
-  const [searchInputText, setSearchInputText] = useState('');
+const Search = ({ handleSubmit, handleSearchbarInputChange, searchText }) => {
+  // const [searchInputText, setSearchInputText] = useState('');
 
-  const handleSubmit = evt => {
-    evt.preventDefault();
-    onSubmit(searchInputText);
-  };
+  // const handleSubmit = evt => {
+  //   evt.preventDefault();
+  //   onSubmit(searchInputText);
+  // };
 
-  const handleSearchbarInputChange = ({ target: { value } }) => {
-    setSearchInputText(value);
-  };
+  // const handleSearchbarInputChange = ({ target: { value } }) => {
+  //   setSearchInputText(value);
+  // };
 
   return (
     <form onSubmit={handleSubmit} className={css.searchForm}>
       <label>
         <input
           className={css.input}
-          value={searchInputText}
+          value={searchText}
           type="text"
           onChange={handleSearchbarInputChange}
           autoComplete="off"

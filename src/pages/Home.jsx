@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getDataByAxios } from 'sevices/library';
 import MovieList from 'components/MovieList/MovieList';
+// import { useLocation } from 'react-router-dom';
 
 const Home = () => {
   const [paginationPage, setPaginationPage] = useState(1);
@@ -32,7 +33,8 @@ const Home = () => {
   };
 
   const title = `Trending today (Page ${paginationPage} of ${totalPages})`;
-
+  // const location = useLocation();
+  // console.log('location Home ', location);
   return (
     <div>
       <h3>{title}</h3>
