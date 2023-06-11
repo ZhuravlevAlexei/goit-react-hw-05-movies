@@ -1,19 +1,25 @@
 import { useEffect, useState } from 'react';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { getDataByAxios } from 'sevices/library';
-
 import Search from 'components/Search/Search';
 import MovieList from 'components/MovieList/MovieList';
-import { useLocation, useSearchParams } from 'react-router-dom';
 
 const Movies = () => {
-  const [paginationPage, setPaginationPage] = useState(1);
-  const [searchText, setSearchText] = useState('');
-  const [totalPages, setTotalPages] = useState(0);
-  const [movieList, setMovieList] = useState([]);
-  const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
-  console.log('location Movies ', location);
-  console.log('searchParams ', searchParams);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [movieList, setMovieList] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+
+  let paginationPage = Number(searchParams.get('page'));
+  if (paginationPage === 0) {
+    paginationPage = 1;
+  }
+  let searchText = searchParams.get('search') ?? '';
+  let title = '';
+
+  // console.log('Initial page ', searchParams.get('page'));
+  // console.log('location Movies ', location);
+  // console.log('searchParams ', searchParams);
 
   useEffect(() => {
     getDataByAxios(`/search/movie`, paginationPage, searchText).then(resp => {
@@ -27,45 +33,48 @@ const Movies = () => {
     });
   }, [paginationPage, searchText]);
 
-  // const createSearchText = searchText => {
-  //   // console.log('search text >>', searchText.trim());
-  //   setSearchText(searchText.trim());
-  //   setPaginationPage(1);
-  // };
-
   const handleSubmit = evt => {
     evt.preventDefault();
-    onSubmit(searchInputText);
+    setSearchParams({ search: searchText.trim(), page: 1 });
+    paginationPage = 1;
   };
 
-  const handleSearchbarInputChange = ({ target: { value } }) => {
-    // setSearchInputText(value);
-    setSearchText(searchText.trim());
+  const handleSearchInputChange = ({ target: { value } }) => {
+    setSearchParams({ search: value, page: paginationPage });
   };
 
   const onLoadNextPage = () => {
-    setPaginationPage(paginationPage + 1);
+    paginationPage = paginationPage + 1;
+    setSearchParams({ search: searchText, page: paginationPage + 1 });
   };
 
   const onLoadPreviousPage = () => {
-    setPaginationPage(paginationPage - 1);
+    paginationPage = paginationPage - 1;
+    setSearchParams({ search: searchText, page: paginationPage - 1 });
   };
 
   const onToStartPage = () => {
-    setPaginationPage(1);
+    paginationPage = 1;
+    setSearchParams({ search: searchText, page: 1 });
   };
 
-  const title = `Search "${searchText}" (Page ${paginationPage} of ${totalPages})`;
+  if (movieList.length === 0) {
+    title = 'No matches';
+  } else {
+    title = `Search "${searchText}" (Page ${paginationPage} of ${totalPages})`;
+  }
 
   return (
     <div>
-      {/* <Search on onSubmit={createSearchText} /> */}
       <Search
-        onSubmit={(handleSubmit, handleSearchbarInputChange, searchText)}
+        handleSubmit={handleSubmit}
+        handleSearchInputChange={handleSearchInputChange}
+        searchText={searchText}
       />
       {searchText && <h3>{title}</h3>}
       {movieList.length !== 0 && (
         <MovieList
+          location={location}
           movieList={movieList}
           paginationPage={paginationPage}
           totalPages={totalPages}

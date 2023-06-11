@@ -3,6 +3,7 @@ import { Button } from 'components/Button/Button';
 import css from './MovieList.module.css';
 
 const MovieList = ({
+  location,
   movieList,
   paginationPage,
   totalPages,
@@ -15,7 +16,9 @@ const MovieList = ({
       <ul>
         {movieList.map(({ id, title }) => (
           <li key={id}>
-            <Link to={`/movies/${id}`}>{title}</Link>
+            <Link to={`/movies/${id}`} state={location}>
+              {title}
+            </Link>
           </li>
         ))}
       </ul>

@@ -1,12 +1,21 @@
 import { useEffect, useState } from 'react';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { getDataByAxios } from 'sevices/library';
 import MovieList from 'components/MovieList/MovieList';
-// import { useLocation } from 'react-router-dom';
 
 const Home = () => {
-  const [paginationPage, setPaginationPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [movieList, setMovieList] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+
+  let paginationPage = Number(searchParams.get('page'));
+  if (paginationPage === 0) {
+    paginationPage = 1;
+  }
+
+  // console.log('Initial page ', searchParams.get('page'));
+  // console.log('location Home ', location);
 
   useEffect(() => {
     getDataByAxios(`/trending/movie/week`, paginationPage).then(resp => {
@@ -21,25 +30,27 @@ const Home = () => {
   }, [paginationPage]);
 
   const onLoadNextPage = () => {
-    setPaginationPage(paginationPage + 1);
+    paginationPage = paginationPage + 1;
+    setSearchParams({ page: paginationPage + 1 });
   };
 
   const onLoadPreviousPage = () => {
-    setPaginationPage(paginationPage - 1);
+    paginationPage = paginationPage - 1;
+    setSearchParams({ page: paginationPage - 1 });
   };
 
   const onToStartPage = () => {
-    setPaginationPage(1);
+    paginationPage = 1;
   };
 
   const title = `Trending today (Page ${paginationPage} of ${totalPages})`;
-  // const location = useLocation();
-  // console.log('location Home ', location);
+
   return (
     <div>
       <h3>{title}</h3>
       {movieList.length !== 0 && (
         <MovieList
+          location={location}
           movieList={movieList}
           paginationPage={paginationPage}
           totalPages={totalPages}

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useLocation, Link, Outlet } from 'react-router-dom';
 import { getDataByAxios } from 'sevices/library';
 import css from './MovieDetails.module.css';
@@ -7,6 +7,7 @@ const MovieDetails = () => {
   const [movieData, setMovieData] = useState({});
   const { movieId } = useParams();
   const BASE_IMAGE_ENDPOINT = 'https://image.tmdb.org/t/p/w500';
+  const location = useLocation();
 
   useEffect(() => {
     getDataByAxios(`/movie/${movieId}`, 0, '').then(resp => {
@@ -28,17 +29,11 @@ const MovieDetails = () => {
     vote_average,
   } = movieData;
 
-  const location = useLocation();
-  // console.log('Movie details location: ', location);
-
-  const locationState = location.state?.from ?? '/movies';
-  const goBackLink = useRef(locationState);
-
   const pathToPoster = BASE_IMAGE_ENDPOINT + poster_path;
 
   return (
     <>
-      <Link className={css.linkAdditional} to={goBackLink.current}>
+      <Link className={css.linkAdditional} to={location.state}>
         &#8592; Go back
       </Link>
       <div className={css.movieCard}>
@@ -64,10 +59,14 @@ const MovieDetails = () => {
         <p className={css.additionalsText}>Additional information</p>
         <ul className={css.additionalsList}>
           <li className={css.additionalsLink}>
-            <Link to="cast">Cast</Link>
+            <Link to="cast" state={location.state}>
+              Cast
+            </Link>
           </li>
           <li className={css.additionalsLink}>
-            <Link to="reviews">Reviews</Link>
+            <Link to="reviews" state={location.state}>
+              Reviews
+            </Link>
           </li>
         </ul>
       </div>

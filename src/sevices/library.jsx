@@ -11,7 +11,7 @@ export async function getDataByAxios(
     const MY_THEMOVIEDB_API_KEY = '6dfafd08c001fd3262dc3fe23504fa05';
     let URL = BASE_URL + ENDPOINT + `?api_key=${MY_THEMOVIEDB_API_KEY}`;
 
-    if (searchText.trim()) {
+    if (searchText) {
       URL = URL + `&query=${searchText.trim()}`;
     }
     if (paginationPage) {
