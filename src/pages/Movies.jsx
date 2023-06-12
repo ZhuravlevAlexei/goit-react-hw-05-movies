@@ -7,6 +7,7 @@ import MovieList from 'components/MovieList/MovieList';
 const Movies = () => {
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
+  // !!! console.log('searchParams :>> ', Object.fromEntries([...searchParams]));
   const [movieList, setMovieList] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
 
@@ -17,16 +18,11 @@ const Movies = () => {
   let searchText = searchParams.get('search') ?? '';
   let title = '';
 
-  // console.log('Initial page ', searchParams.get('page'));
-  // console.log('location Movies ', location);
-  // console.log('searchParams ', searchParams);
-
   useEffect(() => {
     getDataByAxios(`/search/movie`, paginationPage, searchText).then(resp => {
       if (resp.status !== 200) {
         throw new Error(resp.statusText);
       } else {
-        // console.log('resp ', resp);
         setTotalPages(resp.data.total_pages);
         setMovieList(resp.data.results);
       }
@@ -35,8 +31,8 @@ const Movies = () => {
 
   const handleSubmit = evt => {
     evt.preventDefault();
-    setSearchParams({ search: searchText.trim(), page: 1 });
     paginationPage = 1;
+    setSearchParams({ search: searchText.trim(), page: 1 });
   };
 
   const handleSearchInputChange = ({ target: { value } }) => {
@@ -45,12 +41,12 @@ const Movies = () => {
 
   const onLoadNextPage = () => {
     paginationPage = paginationPage + 1;
-    setSearchParams({ search: searchText, page: paginationPage + 1 });
+    setSearchParams({ search: searchText, page: paginationPage });
   };
 
   const onLoadPreviousPage = () => {
     paginationPage = paginationPage - 1;
-    setSearchParams({ search: searchText, page: paginationPage - 1 });
+    setSearchParams({ search: searchText, page: paginationPage });
   };
 
   const onToStartPage = () => {

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import css from './Button.module.css';
 
-export const Button = ({ btnName, onClick }) => {
+const Button = ({ btnName, onClick }) => {
   return (
     <div className={css.buttonWrap}>
       <button className={css.button} onClick={onClick} type="button">
@@ -11,6 +11,9 @@ export const Button = ({ btnName, onClick }) => {
   );
 };
 
+export default Button;
+
 Button.propTypes = {
+  btnName: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
 };

@@ -1,4 +1,4 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import css from './Search.module.css';
 
 const Search = ({ handleSubmit, handleSearchInputChange, searchText }) => {
@@ -23,8 +23,8 @@ const Search = ({ handleSubmit, handleSearchInputChange, searchText }) => {
 
 export default Search;
 
-// Search.propTypes = {
-//   handleSubmit: PropTypes.func.isRequired,
-//   handleSearchInputChange: PropTypes.func.isRequired,
-//   searchText: PropTypes.string.isRequired,
-// };
+Search.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  handleSearchInputChange: PropTypes.func.isRequired,
+  searchText: PropTypes.string.isRequired,
+};

@@ -14,15 +14,11 @@ const Home = () => {
     paginationPage = 1;
   }
 
-  // console.log('Initial page ', searchParams.get('page'));
-  // console.log('location Home ', location);
-
   useEffect(() => {
     getDataByAxios(`/trending/movie/week`, paginationPage).then(resp => {
       if (resp.status !== 200) {
         throw new Error(resp.statusText);
       } else {
-        // console.log('resp ', resp);
         setTotalPages(resp.data.total_pages);
         setMovieList(resp.data.results);
       }
@@ -31,16 +27,17 @@ const Home = () => {
 
   const onLoadNextPage = () => {
     paginationPage = paginationPage + 1;
-    setSearchParams({ page: paginationPage + 1 });
+    setSearchParams({ page: paginationPage });
   };
 
   const onLoadPreviousPage = () => {
     paginationPage = paginationPage - 1;
-    setSearchParams({ page: paginationPage - 1 });
+    setSearchParams({ page: paginationPage });
   };
 
   const onToStartPage = () => {
     paginationPage = 1;
+    setSearchParams({ page: paginationPage });
   };
 
   const title = `Trending today (Page ${paginationPage} of ${totalPages})`;

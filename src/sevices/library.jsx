@@ -17,13 +17,9 @@ export async function getDataByAxios(
     if (paginationPage) {
       URL = URL + `&page=${paginationPage}`;
     }
-    // console.log('FULL URL: ', URL);
-    //alert(URL);
     const resp = await axios.get(URL);
-    //toast.success('Success!');
     return resp;
   } catch (error) {
-    // console.log('error ', error.message);
     toast.error(error.message);
   }
 }

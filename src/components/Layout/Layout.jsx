@@ -1,13 +1,17 @@
+import { Suspense, lazy } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import Header from 'components/Header/Header';
+
+const Header = lazy(() => import('components/Header/Header'));
 
 const Layout = () => {
   return (
     <div>
       <Toaster position="top-right" toastOptions={{ duration: 1500 }} />
-      <Header />
-      <Outlet />
+      <Suspense>
+        <Header />
+        <Outlet />
+      </Suspense>
     </div>
   );
 };

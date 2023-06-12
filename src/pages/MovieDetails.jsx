@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useParams, useLocation, Link, Outlet } from 'react-router-dom';
 import { getDataByAxios } from 'sevices/library';
 import css from './MovieDetails.module.css';
@@ -14,7 +14,6 @@ const MovieDetails = () => {
       if (resp.status !== 200) {
         throw new Error(resp.statusText);
       } else {
-        // console.log('resp: ', resp);
         setMovieData(resp.data);
       }
     });
@@ -70,7 +69,9 @@ const MovieDetails = () => {
           </li>
         </ul>
       </div>
-      <Outlet />
+      <Suspense>
+        <Outlet />
+      </Suspense>
     </>
   );
 };

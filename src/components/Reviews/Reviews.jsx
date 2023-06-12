@@ -11,7 +11,6 @@ const Reviews = () => {
       if (resp.status !== 200) {
         throw new Error(resp.statusText);
       } else {
-        // console.log('resp: ', resp);
         setMovieReviews(resp.data.results);
       }
     });

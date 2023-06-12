@@ -13,7 +13,6 @@ const Cast = () => {
       if (resp.status !== 200) {
         throw new Error(resp.statusText);
       } else {
-        // console.log('resp: ', resp);
         setMovieCast(resp.data.cast);
       }
     });
