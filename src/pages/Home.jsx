@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { getDataByAxios } from 'sevices/library';
 import MovieList from 'components/MovieList/MovieList';
@@ -7,7 +7,7 @@ const Home = () => {
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [movieList, setMovieList] = useState([]);
-  const [totalPages, setTotalPages] = useState(0);
+  const totalPages = useRef(0);
 
   let paginationPage = Number(searchParams.get('page'));
   if (paginationPage === 0) {
@@ -19,7 +19,7 @@ const Home = () => {
       if (resp.status !== 200) {
         throw new Error(resp.statusText);
       } else {
-        setTotalPages(resp.data.total_pages);
+        totalPages.current = resp.data.total_pages;
         setMovieList(resp.data.results);
       }
     });
@@ -40,7 +40,7 @@ const Home = () => {
     setSearchParams({ page: paginationPage });
   };
 
-  const title = `Trending today (Page ${paginationPage} of ${totalPages})`;
+  const title = `Trending today (Page ${paginationPage} of ${totalPages.current})`;
 
   return (
     <div>
@@ -50,7 +50,7 @@ const Home = () => {
           location={location}
           movieList={movieList}
           paginationPage={paginationPage}
-          totalPages={totalPages}
+          totalPages={totalPages.current}
           onLoadNextPage={onLoadNextPage}
           onLoadPreviousPage={onLoadPreviousPage}
           onToStartPage={onToStartPage}
