@@ -20,6 +20,7 @@
   text-decoration: none;
 }
 
+.navLink:focus,
 .navLink:hover {
   color: red;
   text-decoration: underline;
