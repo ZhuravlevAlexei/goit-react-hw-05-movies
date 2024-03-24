@@ -40,10 +40,12 @@ const Home = () => {
     setSearchParams({ page: paginationPage });
   };
 
+  const alarm = 'OLD VERSION 2023.';
   const title = `Trending today (Page ${paginationPage} of ${totalPages.current})`;
 
   return (
     <div>
+      <h3>{alarm}</h3>
       <h3>{title}</h3>
       {movieList.length !== 0 && (
         <MovieList

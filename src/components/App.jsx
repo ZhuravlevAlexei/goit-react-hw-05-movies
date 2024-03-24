@@ -9,7 +9,6 @@ const Cast = lazy(() => import('./Cast/Cast'));
 const Reviews = lazy(() => import('./Reviews/Reviews'));
 
 const App = () => {
-  console.log('Hurray!!!!');
   return (
     <Routes>
       <Route
